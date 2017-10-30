@@ -1,9 +1,9 @@
 package com.example.joaopedrosilva.projectkotlin
 
-import android.content.DialogInterface
+import android.app.Activity
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,15 +23,30 @@ class MainActivity :
         buttonLogin.setOnClickListener(this)
 
 
-
     }
+
+    /**
+     * Extensions Functions permitem adicionar novas funções às classes existentes
+     *
+     */
+    fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) {
+        Toast.makeText(this, message, duration).show()
+    }
+
 
     fun login(user: String, pass: String) {
         if (user == "a" && pass == "a") {
-            Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
-            startActivity(Intent(this, SecondActivity::class.java))
+            toast("success")
+            startActivity<SecondActivity>()
         } else {
-            Toast.makeText(this, "Try again", Toast.LENGTH_LONG).show()
+            toast("try again")
         }
+    }
+
+    /**
+     * reified functions
+     */
+    inline fun <reified T : Activity> Activity.startActivity() {
+        startActivity(Intent(this, T::class.java))
     }
 }
