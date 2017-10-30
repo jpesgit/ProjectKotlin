@@ -14,7 +14,6 @@ class SecondActivity : AppCompatActivity() {
         buttonAddFrag.setOnClickListener {
             listFragment = ListFragment.newInstance()
             supportFragmentManager.beginTransaction().replace(R.id.contentFragment, listFragment).commit()
-
         }
     }
 }
