@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * 4: extension function definidas na classe devem ser private. por a extensão num ficheiro á parte (top level func)
  * 5: login private?
  * 6: startActivity = a 4
+ *
  */
 class MainActivity :
         AppCompatActivity(),
