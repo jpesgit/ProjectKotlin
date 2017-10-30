@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.example.joaopedrosilva.projectkotlin.SecondActivity">
+    android:orientation="vertical"
+    tools:context="com.example.joaopedrosilva.projectkotlin.main.SecondActivity">
 
     <Button
+        android:id="@+id/buttonAddFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/addFrag"
-        android:id="@+id/buttonAddFrag"/>
-    <FrameLayout
+        android:text="@string/addFrag" />
+
+    <Button
+        android:id="@+id/buttonList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/contentFragment"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:text="@string/listFrag" />
+    <FrameLayout
+        android:id="@+id/contentFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
 </LinearLayout>

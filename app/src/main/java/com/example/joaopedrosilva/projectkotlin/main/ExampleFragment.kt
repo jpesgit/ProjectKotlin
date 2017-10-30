@@ -1,4 +1,4 @@
-package com.example.joaopedrosilva.projectkotlin
+package com.example.joaopedrosilva.projectkotlin.main
 
 
 import android.os.Bundle
@@ -6,15 +6,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.joaopedrosilva.projectkotlin.R
+import com.example.joaopedrosilva.projectkotlin.utils.convertSpacesToUnderscores
+import com.example.joaopedrosilva.projectkotlin.utils.inline
 import kotlinx.android.synthetic.main.fragment_plus_one.*
 
 
-class ListFragment : Fragment() {
-    var TAG = ListFragment.javaClass.canonicalName
+class ExampleFragment : Fragment() {
+    var TAG = ExampleFragment::class.java.canonicalName
 
     companion object {
-        fun newInstance(): ListFragment {
-            return ListFragment()
+        fun newInstance(): ExampleFragment {
+            return ExampleFragment()
         }
     }
 
@@ -28,7 +31,7 @@ class ListFragment : Fragment() {
         super.onResume()
         //extension function
         val text = "this is my text".convertSpacesToUnderscores()
-        tvExtensionFuncitons.setText(text)
+        tvExtensionFuncitons.text = text
         //Inline functions
         tvIinlineFunctions.text = inline()
         //Sealed classes
@@ -73,20 +76,3 @@ fun run(view: View, ui: Ui) {
     ui.uiOps.forEach { execute(view, it as UiOp) }
 }
 
-/**
- *Inline functions
- */
-inline fun <Int> addNumber(number: Int, body: (x: Int) -> Int): Int {
-    return body(number)
-}
-
-fun inline(): String {
-    return "${addNumber(number = 4) { x -> x + 4 }}"
-}
-
-/**
- *extension function
- */
-fun String.convertSpacesToUnderscores(): String {
-    return this.replace(" ", "_")
-}

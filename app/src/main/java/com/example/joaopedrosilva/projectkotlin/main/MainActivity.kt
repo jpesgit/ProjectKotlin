@@ -1,11 +1,11 @@
-package com.example.joaopedrosilva.projectkotlin
+package com.example.joaopedrosilva.projectkotlin.main
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import android.widget.Toast
+import com.example.joaopedrosilva.projectkotlin.R
+import com.example.joaopedrosilva.projectkotlin.utils.startActivity
+import com.example.joaopedrosilva.projectkotlin.utils.toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**\
@@ -23,45 +23,42 @@ import kotlinx.android.synthetic.main.activity_main.*
  * 6: startActivity = a 4
  *
  */
-class MainActivity :
-        AppCompatActivity(),
-        View.OnClickListener {
-    override fun onClick(v: View?) {
-        login(etUsername.text.toString(), etPassword.text.toString())
-    }
+class MainActivity : AppCompatActivity(), View.OnClickListener {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        welcomeMessage.setText(getString(R.string.app_name))
+        welcomeMessage.text = getString(R.string.app_name)
         buttonLogin.setOnClickListener(this)
-
+        buttonFunctions.setOnClickListener(this)
 
     }
 
-    /**
-     * Extensions Functions permitem adicionar novas funções às classes existentes
-     *
-     */
-    fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_LONG) {
-        Toast.makeText(this, message, duration).show()
-    }
 
-
-    fun login(user: String, pass: String) {
+    private fun login(user: String, pass: String) {
         if (user == "a" && pass == "a") {
             toast("success")
-            startActivity<SecondActivity>()
+            startActivity<ThirdActivity>()
         } else {
             toast("try again")
         }
     }
 
-    /**
-     * reified functions
-     */
-    inline fun <reified T : Activity> Activity.startActivity() {
-        startActivity(Intent(this, T::class.java))
+
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.buttonLogin -> {
+                login(etUsername.text.toString(), etPassword.text.toString())
+            }
+
+            R.id.buttonFunctions -> {
+                startActivity<SecondActivity>()
+            }
+        }
+
     }
+
+
 }
