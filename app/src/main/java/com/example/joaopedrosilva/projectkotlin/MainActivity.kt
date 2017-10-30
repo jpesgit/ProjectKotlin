@@ -8,6 +8,20 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**\
+ * 1: Line breaks na class declaration se implementar mts interfaces. Neste caso pode ficar num linha só
+ * 2: Ordem dos métodos:
+ * -- lifecycle methods
+ * -- implemented methods
+ * -- public methods
+ * -- private methods
+ * -- extension functions
+ *
+ * 3: podes converter o setText para text = ...
+ * 4: extension function definidas na classe devem ser private. por a extensão num ficheiro á parte (top level func)
+ * 5: login private?
+ * 6: startActivity = a 4
+ */
 class MainActivity :
         AppCompatActivity(),
         View.OnClickListener {
