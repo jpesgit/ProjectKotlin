@@ -54,7 +54,10 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
     override fun onClick(v: View) {
         when (v.id) {
             R.id.add_btn -> {
-                presenter.addNewTask(task_et.text.toString())
+                if (!task_et.text.toString().isEmpty()) {
+                    presenter.addNewTask(task_et.text.toString())
+                    task_et.setText("")
+                }
             }
         }
     }
