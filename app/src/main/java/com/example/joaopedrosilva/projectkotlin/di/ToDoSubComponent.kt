@@ -9,6 +9,5 @@ import dagger.android.AndroidInjector
  */
 @Subcomponent
 interface ToDoSubComponent : AndroidInjector<ThirdActivity> {
-
     @Subcomponent.Builder abstract class Builder : AndroidInjector.Builder<ThirdActivity>()
 }

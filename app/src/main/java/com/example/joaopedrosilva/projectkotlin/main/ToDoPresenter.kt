@@ -1,5 +1,6 @@
 package com.example.joaopedrosilva.projectkotlin.main
 
+import android.util.Log
 import com.example.joaopedrosilva.projectkotlin.data.Task
 import com.example.joaopedrosilva.projectkotlin.data.TaskDao
 import io.reactivex.Observable
@@ -13,8 +14,12 @@ import javax.inject.Inject
  */
 class ToDoPresenter @Inject constructor(val taskDao: TaskDao) {
 
+    companion object {
+        const val TAG = "ToDoPresenter.TAG"
+    }
+
     val compositeDisposable = CompositeDisposable()
-    var tasks = ArrayList<Task>()
+//    var tasks = mutableListOf<Task>()
 
     var presentation: ToDoPresentation? = null
 
@@ -30,26 +35,52 @@ class ToDoPresenter @Inject constructor(val taskDao: TaskDao) {
     }
 
     fun loadTasks() {
-        compositeDisposable.add(taskDao.getAllTasks()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    tasks.clear()
-                    tasks.addAll(it)
-                    (tasks.size - 1).takeIf { it >= 0 }?.let {
-                        presentation?.taskAddedAt(it)
-                        presentation?.scrollTo(it)
-                    }
-                }))
+        compositeDisposable.add(
+                // não deves aceder ao dao directamente, mas atraves
+                // de um manager qualquer (eg: DatabaseManager)
+                taskDao.getAllTasks()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(
+                                { dbTaks ->
+//                                    tasks.clear()
+//                                    tasks.addAll(dbTaks)
 
-        presentation?.showTasks(tasks)
+                                    // um bocado confusa esta extension function
+                                    // n se percebe ao inicio o que queres fazer
+
+                                    if(dbTaks.isNotEmpty()){
+                                        presentation?.adapterDataChanged(dbTaks)
+                                    }
+
+                                    /*(tasks.size - 1).takeIf { it >= 0 }?.let {
+                                        presentation?.taskAddedAt(it)
+                                        presentation?.scrollTo(it)
+                                    }*/
+                                },
+                                // n te esqueças de logar sempre os erros
+                                {
+                                    Log.e(TAG, "whatever message", it)
+                                })
+        )
+
+        // isto n deve estar aqui.
+//        presentation?.showTasks(tasks)
     }
 
     fun addNewTask(taskDescription: String) {
         val newTask = Task(false, description = taskDescription)
-        compositeDisposable.add(Observable.fromCallable { taskDao.insertTask(newTask) }
+
+        compositeDisposable.add(
+                Observable.fromCallable { taskDao.insertTask(newTask) }
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe())
+                        // n precisas disto
+                        // n vais fazer nada na main thread
+//                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { Log.i(TAG, "Task added")},
+                        { Log.e(TAG, "Sth error message", it)}
+                )
+        )
     }
 }

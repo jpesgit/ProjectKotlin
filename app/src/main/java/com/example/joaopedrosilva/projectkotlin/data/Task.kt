@@ -6,7 +6,10 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity(tableName = "task")
 
-data class Task(@ColumnInfo(name = "completed_flag") var completed: Boolean, @ColumnInfo(name = "task_desciption") var description: String) {
+data class Task(
+        @ColumnInfo(name = "completed_flag")
+        var completed: Boolean,
+        @ColumnInfo(name = "task_desciption") var description: String) {
     constructor() : this(false, UNKNOWN);
 
     companion object TO {

@@ -8,25 +8,25 @@ import kotlinx.android.synthetic.main.activity_second.*
 
 class SecondActivity : AppCompatActivity(), View.OnClickListener {
 
-    private var exampleFragment: ExampleFragment? = null
+    // no que diz respeito a fragmentos, não cries referências
+    // só em casos concretos (criar referencia é sempre má ideais)
+    // para além disso não precisas dela neste cenário
+//    private var exampleFragment: ExampleFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
 
         buttonAddFrag.setOnClickListener(this)
         buttonList.setOnClickListener(this)
-
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.buttonAddFrag -> {
-                exampleFragment = ExampleFragment.newInstance()
+                val exampleFragment = ExampleFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.contentFragment, exampleFragment).commit()
             }
         }
     }
-
 }

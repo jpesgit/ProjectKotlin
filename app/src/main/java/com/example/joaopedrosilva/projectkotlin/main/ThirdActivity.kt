@@ -16,21 +16,24 @@ import javax.inject.Inject
  */
 class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListener {
 
-
     @Inject lateinit var presenter: ToDoPresenter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        Stetho.initializeWithDefaults(this);
-        AndroidInjection.inject(this)
+    private val taskAdapter = TaskAdapter()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_third)
+
+        AndroidInjection.inject(this)
+        Stetho.initializeWithDefaults(this)
+
         add_btn.setOnClickListener(this)
-        tasks_rv.let {
-            it.setHasFixedSize(true)
-            it.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-            it.adapter = TaskAdapter(emptyList())
+        tasks_rv.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@ThirdActivity, LinearLayoutManager.VERTICAL, false)
+            adapter = taskAdapter
         }
+
         presenter.onCreate(this)
     }
 
@@ -39,22 +42,15 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
         super.onDestroy()
     }
 
-    override fun showTasks(tasks: List<Task>) {
-        tasks_rv?.adapter = TaskAdapter(tasks)
-    }
-
-    override fun taskAddedAt(position: Int) {
-        tasks_rv?.adapter?.notifyItemInserted(position)
-    }
-
-    override fun scrollTo(position: Int) {
-        tasks_rv?.smoothScrollToPosition(position)
+    override fun adapterDataChanged(tasks: List<Task>) {
+        taskAdapter.setAdapterItems(tasks)
+        tasks_rv.smoothScrollToPosition(0)
     }
 
     override fun onClick(v: View) {
         when (v.id) {
             R.id.add_btn -> {
-                if (!task_et.text.toString().isEmpty()) {
+                if (task_et.text.toString().isNotEmpty()) {
                     presenter.addNewTask(task_et.text.toString())
                     task_et.setText("")
                 }

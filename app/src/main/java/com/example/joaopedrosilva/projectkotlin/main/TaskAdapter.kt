@@ -1,13 +1,13 @@
 package com.example.joaopedrosilva.projectkotlin.main
 
+import android.support.v7.widget.RecyclerView
 import com.example.joaopedrosilva.projectkotlin.R
 import com.example.joaopedrosilva.projectkotlin.data.Task
 import kotlinx.android.synthetic.main.item_to_do.view.*
 
-/**
- * Created by joaopedrosilva on 30/10/17.
- */
-class TaskAdapter(var tasks: List<Task>) : android.support.v7.widget.RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+
+    private val tasks: MutableList<Task> = mutableListOf()
 
     override fun onCreateViewHolder(parent: android.view.ViewGroup, type: Int): TaskAdapter.TaskViewHolder {
         return TaskViewHolder(parent)
@@ -17,9 +17,15 @@ class TaskAdapter(var tasks: List<Task>) : android.support.v7.widget.RecyclerVie
         viewHolder.bind(tasks[position])
     }
 
+    fun setAdapterItems(items: List<Task>){
+        this.tasks.clear()
+        this.tasks.addAll(items)
+    }
+
     override fun getItemCount(): Int = tasks.size
 
-    inner class TaskViewHolder(parent: android.view.ViewGroup) : android.support.v7.widget.RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(R.layout.item_to_do, parent, false)) {
+    // tira isto e poe no oncreateview (LayoutInflator...)
+    inner class TaskViewHolder(parent: android.view.ViewGroup) : RecyclerView.ViewHolder(android.view.LayoutInflater.from(parent.context).inflate(R.layout.item_to_do, parent, false)) {
 
         fun bind(task: Task) = with(itemView) {
             task_cb.text = task.description
