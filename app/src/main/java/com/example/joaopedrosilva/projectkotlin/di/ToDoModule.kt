@@ -11,6 +11,7 @@ import dagger.multibindings.IntoMap
 /**
  * Created by joaopedrosilva on 30/10/17.
  */
+@AppScope
 @Module(subcomponents = arrayOf(ToDoSubComponent::class))
 abstract class ToDoModule {
 

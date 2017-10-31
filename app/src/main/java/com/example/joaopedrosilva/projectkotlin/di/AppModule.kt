@@ -9,6 +9,7 @@ import dagger.Provides
 /**
  * Created by joaopedrosilva on 30/10/17.
  */
+@AppScope
 @Module
 class AppModule(private val context: Context) {
 
