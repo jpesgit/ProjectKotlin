@@ -45,16 +45,16 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
     override fun adapterDataChanged(tasks: List<Task>) {
         taskAdapter.setAdapterItems(tasks)
         tasks_rv.smoothScrollToPosition(0)
-        taskAdapter.notifyDataSetChanged()
+        // isto faz mais sentido ficar dentro do adapter
+//        taskAdapter.notifyDataSetChanged()
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
+    override fun onClick(view: View) {
+        when (view.id) {
             R.id.add_btn -> {
                 if (task_et.text.toString().isNotEmpty()) {
                     presenter.addNewTask(task_et.text.toString())
                     task_et.setText("")
-
                 }
             }
         }

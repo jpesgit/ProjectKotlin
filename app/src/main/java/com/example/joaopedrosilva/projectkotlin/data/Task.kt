@@ -9,13 +9,15 @@ import android.arch.persistence.room.PrimaryKey
 data class Task(
         @ColumnInfo(name = "completed_flag")
         var completed: Boolean,
-        @ColumnInfo(name = "task_desciption") var description: String) {
-    constructor() : this(false, UNKNOWN);
+        @ColumnInfo(name = "task_desciption")
+        var description: String
+) {
+    constructor() : this(false, UNKNOWN)
 
     companion object TO {
         val MASTER = 0
         val ROBOT = 1
-        private val UNKNOWN = ""; // just use for initializing
+        private val UNKNOWN = "" // just use for initializing
     }
 
     @field: PrimaryKey(autoGenerate = true)
