@@ -19,7 +19,7 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_second)
 
         buttonAddFrag.setOnClickListener(this)
-        buttonNews.setOnClickListener(this)
+        buttonWiki.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -28,7 +28,7 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
                 val exampleFragment = ExampleFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.contentFragment, exampleFragment).commit()
             }
-            R.id.buttonNews -> {
+            R.id.buttonWiki -> {
                 val wikiFragment = WikiFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.contentFragment, wikiFragment).commit()
             }
