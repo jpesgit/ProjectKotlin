@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.joaopedrosilva.projectkotlin.R
+import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiFragment
 import kotlinx.android.synthetic.main.activity_second.*
 
 class SecondActivity : AppCompatActivity(), View.OnClickListener {
@@ -18,7 +19,7 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_second)
 
         buttonAddFrag.setOnClickListener(this)
-        buttonList.setOnClickListener(this)
+        buttonNews.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -27,6 +28,12 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
                 val exampleFragment = ExampleFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.contentFragment, exampleFragment).commit()
             }
+            R.id.buttonNews -> {
+                val wikiFragment = WikiFragment.newInstance()
+                supportFragmentManager.beginTransaction().replace(R.id.contentFragment, wikiFragment).commit()
+            }
         }
     }
+
+
 }

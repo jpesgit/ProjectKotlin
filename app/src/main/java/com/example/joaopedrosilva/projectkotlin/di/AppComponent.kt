@@ -6,6 +6,7 @@ import dagger.Component
 /**
  * Created by joaopedrosilva on 30/10/17.
  */
+@AppScope
 @Component(modules = arrayOf(AppModule::class,
         ToDoModule::class))
 interface AppComponent {

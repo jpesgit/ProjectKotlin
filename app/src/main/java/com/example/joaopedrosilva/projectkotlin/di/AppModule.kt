@@ -9,17 +9,20 @@ import dagger.Provides
 /**
  * Created by joaopedrosilva on 30/10/17.
  */
-@AppScope
+
 @Module
 class AppModule(private val context: Context) {
 
     @Provides
+    @AppScope
     fun providesAppContext() = context
 
     @Provides
+    @AppScope
     fun providesAppDatabase(context: Context): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, "my-todo-db").build()
 
     @Provides
+    @AppScope
     fun providesToDoDao(database: AppDatabase) = database.taskDao()
 }
