@@ -21,6 +21,9 @@ class WikiFragment : Fragment(), View.OnClickListener {
     var disposable: Disposable? = null
 
     val wikiApiServe by lazy {
+
+        // Isto tem de vir do dagger com appscope. Vê na app prozisGo como está feito (branch production)
+        // só fazes este call uma vez na app inteira
         WikiApiService.create()
     }
 
@@ -30,10 +33,12 @@ class WikiFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_wiki, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//        val view = inflater.inflate(R.layout.fragment_wiki, container, false)
 
-        return view
+        return inflater.inflate(R.layout.fragment_wiki, container, false)
+//        return view
     }
 
     override fun onResume() {
@@ -42,8 +47,10 @@ class WikiFragment : Fragment(), View.OnClickListener {
 
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
+    override fun onClick(view: View) {
+//    override fun onClick(v: View) {
+//        when (v.id) {
+        when (view.id) {
             R.id.btn_search -> if (edit_search.text.toString().isNotEmpty()) {
                 beginSearch(edit_search.text.toString())
             }
