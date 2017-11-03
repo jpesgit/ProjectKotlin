@@ -22,8 +22,10 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
         buttonNews.setOnClickListener(this)
     }
 
-    override fun onClick(v: View) {
-        when (v.id) {
+//    override fun onClick(v: View) {
+    override fun onClick(view: View) {
+//        when (v.id) {
+        when (view.id) {
             R.id.buttonAddFrag -> {
                 val exampleFragment = ExampleFragment.newInstance()
                 supportFragmentManager.beginTransaction().replace(R.id.contentFragment, exampleFragment).commit()
