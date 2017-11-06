@@ -2,6 +2,7 @@ package com.example.joaopedrosilva.projectkotlin.main.WikiSearch
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,6 @@ class WikiFragment : Fragment(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         btn_search.setOnClickListener(this)
-
     }
 
     override fun onClick(view: View) {
@@ -62,8 +62,19 @@ class WikiFragment : Fragment(), View.OnClickListener {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                        { result -> txt_search_result.text = "${result.query.searchinfo.totalhits} result found" },
+                        { result -> formatResult(result) },
                         { error -> Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show() }
                 )
+
+    }
+
+    fun formatResult(resultWiki: ResultWiki) {
+        txt_search_result.text = "${resultWiki.query.searchInfo.totalHits} result found"
+        val wikiAdapter = WikiAdapter(resultWiki.query.search as MutableList<Search>)
+        wikis_rv.run {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = wikiAdapter
+        }
     }
 }

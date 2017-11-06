@@ -16,7 +16,7 @@ interface WikiApiService {
     fun hitCountCheck(@Query("action") action: String,
                       @Query("format") format: String,
                       @Query("list") list: String,
-                      @Query("srsearch") srsearch: String): Observable<Model.Result>
+                      @Query("srsearch") srsearch: String): Observable<ResultWiki>
 
     companion object {
         fun create(): WikiApiService {
