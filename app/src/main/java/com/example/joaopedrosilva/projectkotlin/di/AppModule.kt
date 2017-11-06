@@ -6,10 +6,6 @@ import com.example.joaopedrosilva.projectkotlin.data.AppDatabase
 import dagger.Module
 import dagger.Provides
 
-/**
- * Created by joaopedrosilva on 30/10/17.
- */
-
 @Module
 class AppModule(private val context: Context) {
 

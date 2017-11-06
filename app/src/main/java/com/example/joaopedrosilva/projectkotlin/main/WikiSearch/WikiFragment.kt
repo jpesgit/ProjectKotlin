@@ -3,23 +3,29 @@ package com.example.joaopedrosilva.projectkotlin.main.WikiSearch
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.joaopedrosilva.projectkotlin.R
+import com.jakewharton.rxbinding2.widget.RxTextView
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_wiki.*
+import java.util.concurrent.TimeUnit.MILLISECONDS
 
 /**
  * Created by joaopedrosilva on 03/11/17.
  */
-class WikiFragment : Fragment(), View.OnClickListener {
+class WikiFragment : Fragment() {
 
     var TAG = WikiFragment::class.java.canonicalName
     var disposable: Disposable? = null
+
+    val wikiAdapter = WikiAdapter()
 
     val wikiApiServe by lazy {
 
@@ -35,46 +41,59 @@ class WikiFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-//    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-//        val view = inflater.inflate(R.layout.fragment_wiki, container, false)
-
         return inflater.inflate(R.layout.fragment_wiki, container, false)
-//        return view
     }
 
-    override fun onResume() {
-        super.onResume()
-        btn_search.setOnClickListener(this)
-    }
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onClick(view: View) {
-//    override fun onClick(v: View) {
-//        when (v.id) {
-        when (view.id) {
-            R.id.btn_search -> if (edit_search.text.toString().isNotEmpty()) {
-                beginSearch(edit_search.text.toString())
-            }
-        }
-    }
-
-    private fun beginSearch(searchString: String) {
-        disposable = wikiApiServe.hitCountCheck("query", "json", "search", searchString)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        { result -> formatResult(result) },
-                        { error -> Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show() }
-                )
-
-    }
-
-    fun formatResult(resultWiki: ResultWiki) {
-        txt_search_result.text = "${resultWiki.query.searchInfo.totalHits} result found"
-        val wikiAdapter = WikiAdapter(resultWiki.query.search as MutableList<Search>)
         wikis_rv.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = wikiAdapter
         }
+
+        RxTextView.textChangeEvents(edit_search)
+                .skipInitialValue()
+                .debounce(500, MILLISECONDS) // vê a doc para aqui
+                .map { it.text().toString() }
+                .subscribeOn(Schedulers.io())
+                .flatMap {
+                    if (it.isNotEmpty()) {
+                        wikiApiServe.hitCountCheck("query", "json", "search", it)
+                                .map<Results> { Results.Result(it) }
+                    } else {
+                        Observable.just(Results.ResultEmpty)
+                    }
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        { result ->
+                            when (result) {
+                                is WikiFragment.Results.Result -> formatResult(result.items)
+                                is WikiFragment.Results.ResultEmpty -> clearData()
+                            }
+                        },
+                        { error ->
+                            Log.i(TAG, "", error)
+                            Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+                        }
+                )
+    }
+
+    sealed class Results {
+        object ResultEmpty : Results()
+        class Result(val items: ResultWiki) : Results()
+    }
+
+    private fun clearData() {
+        wikiAdapter.setAdapterItems(emptyList())
+        txt_search_result.text = ""
+    }
+
+    private fun formatResult(resultWiki: ResultWiki) {
+        val qtt = resultWiki.query.searchInfo.totalHits
+        txt_search_result.text = getString(R.string.wiki_search_results_found, qtt)
+        wikiAdapter.setAdapterItems(resultWiki.query.search)
     }
 }

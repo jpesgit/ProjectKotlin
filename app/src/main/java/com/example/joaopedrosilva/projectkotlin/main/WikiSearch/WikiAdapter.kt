@@ -10,8 +10,9 @@ import com.example.joaopedrosilva.projectkotlin.R
 /**
  * Created by joaopedrosilva on 06/11/17.
  */
-class WikiAdapter(val wikis: MutableList<Search>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class WikiAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private val wikis: MutableList<Search> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): RecyclerView.ViewHolder {
 //        var v = LayoutInflater.from(parent.context).inflate(R.layout.item_to_do, parent, false)
