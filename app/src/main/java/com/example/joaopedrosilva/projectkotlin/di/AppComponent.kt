@@ -8,7 +8,9 @@ import dagger.Component
  */
 @AppScope
 @Component(modules = arrayOf(AppModule::class,
-        ActBindModule::class))
+        ActBindModule::class,
+        NetworkModule::class))
+
 interface AppComponent {
     fun inject(application: ProjectKotlinApplication)
 

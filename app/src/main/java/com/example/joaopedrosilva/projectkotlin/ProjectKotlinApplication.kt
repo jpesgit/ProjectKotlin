@@ -13,9 +13,10 @@ import javax.inject.Inject
  */
 class ProjectKotlinApplication : Application(), HasActivityInjector {
 
+
     @Inject lateinit var activityInjector: DispatchingAndroidInjector<Activity>
 
-
+    // @Inject lateinit var dispatchJobServiceInjector: DispatchingAndroidInjector<Service>
 
     override fun onCreate() {
         super.onCreate()
@@ -24,5 +25,5 @@ class ProjectKotlinApplication : Application(), HasActivityInjector {
     }
 
     override fun activityInjector(): AndroidInjector<Activity> = activityInjector
-
+    // override fun serviceInjector(): AndroidInjector<Service> = dispatchJobServiceInjector
 }
