@@ -7,12 +7,10 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 
-/**
- * Created by joaopedrosilva on 30/10/17.
- */
-class ToDoPresenter @Inject constructor(val taskDao: TaskDao) {
+class ToDoPresenter (
+        val taskDao: TaskDao
+) {
 
     companion object {
         const val TAG = "ToDoPresenter.TAG"

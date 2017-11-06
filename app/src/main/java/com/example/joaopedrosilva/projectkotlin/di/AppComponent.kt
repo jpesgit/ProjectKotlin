@@ -1,23 +1,14 @@
 package com.example.joaopedrosilva.projectkotlin.di
 
-import android.app.Activity
-import android.app.Application
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
-import android.support.v4.app.FragmentManager
 import com.example.joaopedrosilva.projectkotlin.ProjectKotlinApplication
 import dagger.Component
-import dagger.android.AndroidInjection
-import dagger.android.support.AndroidSupportInjection
-import dagger.android.support.HasSupportFragmentInjector
 
 /**
  * Created by joaopedrosilva on 30/10/17.
  */
 @AppScope
 @Component(modules = arrayOf(AppModule::class,
-        ToDoModule::class))
+        ActBindModule::class))
 interface AppComponent {
     fun inject(application: ProjectKotlinApplication)
 
@@ -27,11 +18,11 @@ interface AppComponent {
                     .appModule(AppModule(app))
                     .build().apply { inject(app) }
 
-            app.registerActivityLifecycleCallbacks(MyLifeCycle())
+//            app.registerActivityLifecycleCallbacks(MyLifeCycle())
         }
     }
 
-    private class MyLifeCycle : Application.ActivityLifecycleCallbacks {
+    /*private class MyLifeCycle : Application.ActivityLifecycleCallbacks {
 
         private val actHash: HashMap<Int, FragmentManager.FragmentLifecycleCallbacks> = hashMapOf()
 
@@ -83,5 +74,5 @@ interface AppComponent {
 
         override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle?) {}
         override fun onActivityStopped(activity: Activity) {}
-    }
+    }*/
 }

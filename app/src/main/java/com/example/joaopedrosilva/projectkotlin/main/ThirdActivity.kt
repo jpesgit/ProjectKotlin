@@ -2,7 +2,7 @@ package com.example.joaopedrosilva.projectkotlin.main
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView.LayoutManager
 import android.view.View
 import com.example.joaopedrosilva.projectkotlin.R
 import com.example.joaopedrosilva.projectkotlin.data.Task
@@ -11,14 +11,11 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_third.*
 import javax.inject.Inject
 
-/**
- * Created by joaopedrosilva on 30/10/17.
- */
 class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListener {
 
     @Inject lateinit var presenter: ToDoPresenter
-
-    private val taskAdapter = TaskAdapter()
+    @Inject lateinit var myLayoutManager: LayoutManager
+    @Inject lateinit var taskAdapter: TaskAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +27,7 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
         add_btn.setOnClickListener(this)
         tasks_rv.run {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@ThirdActivity, LinearLayoutManager.VERTICAL, false)
+            layoutManager = myLayoutManager
             adapter = taskAdapter
         }
 

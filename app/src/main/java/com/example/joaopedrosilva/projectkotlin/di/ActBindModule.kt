@@ -8,14 +8,10 @@ import dagger.android.ActivityKey
 import dagger.android.AndroidInjector
 import dagger.multibindings.IntoMap
 
-/**
- * Created by joaopedrosilva on 30/10/17.
- */
-
-@Module(subcomponents = arrayOf(ToDoSubComponent::class))
-abstract class ToDoModule {
+@Module(subcomponents = arrayOf(ThirdActivityComponent::class))
+abstract class ActBindModule {
     @Binds
     @IntoMap
     @ActivityKey(ThirdActivity::class)
-    internal abstract fun bindsToDoActivityInjectorFactory(builder: ToDoSubComponent.Builder): AndroidInjector.Factory<out Activity>
+    internal abstract fun bindThirdActivity(builder: ThirdActivityComponent.Builder): AndroidInjector.Factory<out Activity>
 }
