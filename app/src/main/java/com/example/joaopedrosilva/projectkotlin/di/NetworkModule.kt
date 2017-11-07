@@ -28,5 +28,4 @@ class NetworkModule {
 
         return retrofit
     }
-
 }

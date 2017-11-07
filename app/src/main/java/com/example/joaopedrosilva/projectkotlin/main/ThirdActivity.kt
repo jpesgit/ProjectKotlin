@@ -31,7 +31,7 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
             adapter = taskAdapter
         }
 
-        presenter.onCreate(this)
+        presenter.onCreate()
     }
 
     override fun onDestroy() {

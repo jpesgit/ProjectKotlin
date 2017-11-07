@@ -19,9 +19,6 @@ import kotlinx.android.synthetic.main.fragment_wiki.*
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import javax.inject.Inject
 
-/**
- * Created by joaopedrosilva on 03/11/17.
- */
 class WikiFragment : Fragment() {
 
     var TAG = WikiFragment::class.java.canonicalName
@@ -29,6 +26,7 @@ class WikiFragment : Fragment() {
 
     val wikiAdapter = WikiAdapter()
     @Inject lateinit var wikiRestApi: WikiRestAPI
+
     companion object {
         fun newInstance(): WikiFragment {
             return WikiFragment()
@@ -39,8 +37,6 @@ class WikiFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_wiki, container, false)
     }
 
-
-
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -50,7 +46,7 @@ class WikiFragment : Fragment() {
             adapter = wikiAdapter
         }
 
-        RxTextView.textChangeEvents(edit_search)
+        disposable = RxTextView.textChangeEvents(edit_search)
                 .skipInitialValue()
                 .debounce(500, MILLISECONDS) // vê a doc para aqui
                 .map { it.text().toString() }
@@ -77,6 +73,12 @@ class WikiFragment : Fragment() {
                         }
                 )
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        disposable?.dispose()
+    }
+
 
     sealed class Results {
         object ResultEmpty : Results()

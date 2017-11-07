@@ -9,7 +9,8 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 class ToDoPresenter (
-        val taskDao: TaskDao
+        val taskDao: TaskDao,
+        val presentation: ToDoPresentation
 ) {
 
     companion object {
@@ -17,19 +18,13 @@ class ToDoPresenter (
     }
 
     val compositeDisposable = CompositeDisposable()
-//    var tasks = mutableListOf<Task>()
 
-    var presentation: ToDoPresentation? = null
-
-    fun onCreate(toDoPresentation: ToDoPresentation) {
-        presentation = toDoPresentation
-
+    fun onCreate() {
         loadTasks()
     }
 
     fun onDestroy() {
         compositeDisposable.dispose()
-        presentation = null
     }
 
     fun loadTasks() {
@@ -48,7 +43,7 @@ class ToDoPresenter (
                                     // n se percebe ao inicio o que queres fazer
 
                                     if(dbTaks.isNotEmpty()){
-                                        presentation?.adapterDataChanged(dbTaks)
+                                        presentation.adapterDataChanged(dbTaks)
                                     }
 
                                     /*(tasks.size - 1).takeIf { it >= 0 }?.let {

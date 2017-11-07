@@ -18,12 +18,12 @@ interface ThirdActivityComponent : AndroidInjector<ThirdActivity> {
 
     @Module
     class ThirdActivityModule{
-
         @Provides
         @ActivityScope
         fun providePresenter(
-                taskDao: TaskDao
-        ) = ToDoPresenter(taskDao)
+                taskDao: TaskDao,
+                act: ThirdActivity
+        ) = ToDoPresenter(taskDao, act)
 
         @Provides
         @ActivityScope
