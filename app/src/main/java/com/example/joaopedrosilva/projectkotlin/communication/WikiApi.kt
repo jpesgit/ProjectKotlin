@@ -1,6 +1,7 @@
-package com.example.joaopedrosilva.projectkotlin.main.WikiSearch
+package com.example.joaopedrosilva.projectkotlin.communication
 
 
+import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.ResultWiki
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -8,7 +9,7 @@ import retrofit2.http.Query
 /**
  * Created by joaopedrosilva on 03/11/17.
  */
-interface WikiApiService {
+interface WikiApi {
 
     @GET("api.php")
     fun hitCountCheck(@Query("action") action: String,

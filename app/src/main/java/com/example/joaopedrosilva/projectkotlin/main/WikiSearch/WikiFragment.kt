@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.joaopedrosilva.projectkotlin.R
-import com.example.joaopedrosilva.projectkotlin.communication.MainNetworkInteractor
+import com.example.joaopedrosilva.projectkotlin.communication.WikiRestAPI
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_wiki.*
 import java.util.concurrent.TimeUnit.MILLISECONDS
@@ -24,11 +25,10 @@ import javax.inject.Inject
 class WikiFragment : Fragment() {
 
     var TAG = WikiFragment::class.java.canonicalName
+    var disposable: Disposable? = null
 
     val wikiAdapter = WikiAdapter()
-    @Inject lateinit var services: MainNetworkInteractor
-
-
+    @Inject lateinit var wikiRestApi: WikiRestAPI
     companion object {
         fun newInstance(): WikiFragment {
             return WikiFragment()
@@ -39,10 +39,7 @@ class WikiFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_wiki, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
 
-    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,7 +57,7 @@ class WikiFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .flatMap {
                     if (it.isNotEmpty()) {
-                        services.hitCountCheck(it)
+                        wikiRestApi.hitCountCheck("query", "json", "search", it)
                                 .map<Results> { Results.Result(it) }
                     } else {
                         Observable.just(Results.ResultEmpty)

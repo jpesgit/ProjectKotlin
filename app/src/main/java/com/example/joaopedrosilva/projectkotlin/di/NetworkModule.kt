@@ -1,6 +1,5 @@
 package com.example.joaopedrosilva.projectkotlin.di
 
-import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiApiService
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -12,12 +11,11 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 /**
  * Created by joaopedrosilva on 06/11/17.
  */
-@Suppress("ConstantConditionIf")
 @Module
 class NetworkModule {
     @Provides
     @AppScope
-    fun provideProzisApiCommon(): WikiApiService {
+    fun provideProzisApiCommon(): Retrofit {
         val retrofit = Retrofit.Builder()
                 .client(
                         OkHttpClient.Builder().apply {
@@ -28,7 +26,7 @@ class NetworkModule {
                 .baseUrl("https://en.wikipedia.org/w/")
                 .build()
 
-        return retrofit.create(WikiApiService::class.java)
+        return retrofit
     }
 
 }
