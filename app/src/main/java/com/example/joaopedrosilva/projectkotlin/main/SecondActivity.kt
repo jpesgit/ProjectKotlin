@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 class SecondActivity : AppCompatActivity(), View.OnClickListener, WikiApiProvider {
 
-
     @Inject lateinit var wikiRestApi: WikiRestAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {

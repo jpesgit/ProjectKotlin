@@ -19,6 +19,7 @@ class ToDoPresenter (
 
     val compositeDisposable = CompositeDisposable()
 
+    // podes usar o SecondActitycomponent
     fun onCreate() {
         loadTasks()
     }
