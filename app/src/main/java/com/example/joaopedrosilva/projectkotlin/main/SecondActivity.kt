@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.joaopedrosilva.projectkotlin.R
+import com.example.joaopedrosilva.projectkotlin.communication.WikiApiProvider
 import com.example.joaopedrosilva.projectkotlin.communication.WikiRestAPI
 import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiFragment
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_second.*
 import javax.inject.Inject
 
-class SecondActivity : AppCompatActivity(), View.OnClickListener {
+class SecondActivity : AppCompatActivity(), View.OnClickListener, WikiApiProvider {
 
 
-    @Inject open lateinit var wikiRestApi: WikiRestAPI
+    @Inject lateinit var wikiRestApi: WikiRestAPI
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
@@ -21,12 +23,12 @@ class SecondActivity : AppCompatActivity(), View.OnClickListener {
         AndroidInjection.inject(this)
         buttonAddFrag.setOnClickListener(this)
         buttonWiki.setOnClickListener(this)
-
     }
 
-//    override fun onClick(v: View) {
+    override fun provideWikiRestApi(): WikiRestAPI
+            = wikiRestApi
+
     override fun onClick(view: View) {
-//        when (v.id) {
         when (view.id) {
             R.id.buttonAddFrag -> {
                 val exampleFragment = ExampleFragment.newInstance()
