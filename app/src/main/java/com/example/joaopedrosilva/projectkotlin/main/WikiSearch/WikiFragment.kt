@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.example.joaopedrosilva.projectkotlin.R
 import com.example.joaopedrosilva.projectkotlin.communication.WikiRestAPI
+import com.example.joaopedrosilva.projectkotlin.main.SecondActivity
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +26,7 @@ class WikiFragment : Fragment() {
     var disposable: Disposable? = null
 
     val wikiAdapter = WikiAdapter()
-    @Inject lateinit var wikiRestApi: WikiRestAPI
+    @Inject lateinit var mWikiRestApi: WikiRestAPI
 
     companion object {
         fun newInstance(): WikiFragment {
@@ -39,7 +40,7 @@ class WikiFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        mWikiRestApi = (activity as SecondActivity).wikiRestApi
         wikis_rv.run {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -53,7 +54,7 @@ class WikiFragment : Fragment() {
                 .subscribeOn(Schedulers.io())
                 .flatMap {
                     if (it.isNotEmpty()) {
-                        wikiRestApi.hitCountCheck("query", "json", "search", it)
+                        mWikiRestApi.hitCountCheck("query", "json", "search", it)
                                 .map<Results> { Results.Result(it) }
                     } else {
                         Observable.just(Results.ResultEmpty)

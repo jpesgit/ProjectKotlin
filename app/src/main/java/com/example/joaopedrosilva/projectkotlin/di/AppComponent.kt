@@ -1,7 +1,6 @@
 package com.example.joaopedrosilva.projectkotlin.di
 
 import com.example.joaopedrosilva.projectkotlin.ProjectKotlinApplication
-import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiModule
 import dagger.Component
 
 /**
