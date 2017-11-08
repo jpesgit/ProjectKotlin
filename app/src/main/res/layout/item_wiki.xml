@@ -1,43 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                xmlns:tools="http://schemas.android.com/tools"
                 android:background="@drawable/relative_layout_background"
-                android:padding="16dp">
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/title_tv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="League of Legens League of Legens League of Legens League of Legens"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="marquee"
         android:singleLine="true"
-        android:layout_toStartOf="@+id/date_tv"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/date_tv"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="League of Legens League of Legens League of Legens League of Legens" />
 
     <TextView
         android:id="@+id/date_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        tools:text="10/2017"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="10/2017" />
 
     <TextView
         android:id="@+id/page_id_tv"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:singleLine="true"
+        android:layout_marginTop="4dp"
         android:ellipsize="end"
-        android:layout_below="@+id/title_tv"
-        tools:text="Page id: 3254454542342343242342343242342342342345"/>
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+        tools:text="Page id: 3254454542342343242342343242342342342345" />
 
     <TextView
         android:id="@+id/snippet_tv"
-        tools:text="dlfkjsdkfj kldsjfkl jsdlkfj dslkfjdlskjf lkdsjf kldsjflksdjf kldsjf kldsjflkdsj fklsdjfk jdsfklj dskfljsd lkfjsdklfj sdljf klsdjf kldsjfkl dsjf kldsjfkjsdfkljsdklf jsdklfj sdklfjdskl jfkdlsjf lkdsjfklsdjf lsçdjflkdsjfklçsdf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/page_id_tv" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/page_id_tv"
+        tools:text="dlfkjsdkfj kldsjfkl jsdlkfj dslkfjdlskjf lkdsjf kldsjflksdjf kldsjf kldsjflkdsj fklsdjfk jdsfklj dskfljsd lkfjsdklfj sdljf klsdjf kldsjfkl dsjf kldsjfkjsdfkljsdklf jsdklfj sdklfjdskl jfkdlsjf lkdsjfklsdjf lsçdjflkdsjfklçsdf" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
