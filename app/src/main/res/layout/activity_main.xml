@@ -47,7 +47,7 @@
             android:id="@+id/buttonFunctions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/functions"
+            android:text="@string/wiki"
             android:textAllCaps="true" />
     </LinearLayout>
 

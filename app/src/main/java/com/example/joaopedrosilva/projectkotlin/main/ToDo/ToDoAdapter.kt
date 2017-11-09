@@ -1,4 +1,4 @@
-package com.example.joaopedrosilva.projectkotlin.main
+package com.example.joaopedrosilva.projectkotlin.main.ToDo
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import com.example.joaopedrosilva.projectkotlin.R
 import com.example.joaopedrosilva.projectkotlin.data.Task
 //import kotlinx.android.synthetic.main.item_to_do.view.*
 
-class TaskAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ToDoAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val tasks: MutableList<Task> = mutableListOf()
 
@@ -24,9 +24,13 @@ class TaskAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         (viewHolder as Item).bindData(tasks[position])
     }
 
-    fun setAdapterItems(items: List<Task>) {
+    fun setAdapterItems(items: List<Task>?) {
         this.tasks.clear()
-        this.tasks.addAll(items)
+        if (items != null) {
+            this.tasks.addAll(items)
+        }
+
+
         notifyDataSetChanged()
     }
 

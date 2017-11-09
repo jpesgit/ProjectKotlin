@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.example.joaopedrosilva.projectkotlin.R
+import com.example.joaopedrosilva.projectkotlin.main.ToDo.ToDoActivity
+import com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiAct
 import com.example.joaopedrosilva.projectkotlin.utils.startActivity
 import com.example.joaopedrosilva.projectkotlin.utils.toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun login(user: String, pass: String) {
         if (user == "a" && pass == "a") {
             toast("success")
-            startActivity<ThirdActivity>()
+            startActivity<ToDoActivity>()
         } else {
             toast("try again")
         }
@@ -31,7 +33,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(view: View) {
         when (view.id) {
             R.id.buttonLogin -> login(etUsername.text.toString(), etPassword.text.toString())
-            R.id.buttonFunctions -> startActivity<SecondActivity>()
+            R.id.buttonFunctions -> startActivity<WikiAct>()
         }
     }
 }

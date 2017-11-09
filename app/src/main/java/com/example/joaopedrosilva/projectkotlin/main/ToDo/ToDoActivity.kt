@@ -1,4 +1,4 @@
-package com.example.joaopedrosilva.projectkotlin.main
+package com.example.joaopedrosilva.projectkotlin.main.ToDo
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -11,11 +11,11 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_third.*
 import javax.inject.Inject
 
-class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListener {
+class ToDoActivity : AppCompatActivity(), View.OnClickListener {
 
     @Inject lateinit var presenter: ToDoPresenter
     @Inject lateinit var myLayoutManager: LayoutManager
-    @Inject lateinit var taskAdapter: TaskAdapter
+    @Inject lateinit var toDoAdapter: ToDoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +28,8 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
         tasks_rv.run {
             setHasFixedSize(true)
             layoutManager = myLayoutManager
-            adapter = taskAdapter
+            adapter = toDoAdapter
         }
-
         presenter.onCreate()
     }
 
@@ -39,11 +38,13 @@ class ThirdActivity : AppCompatActivity(), ToDoPresentation, View.OnClickListene
         super.onDestroy()
     }
 
-    override fun adapterDataChanged(tasks: List<Task>) {
-        taskAdapter.setAdapterItems(tasks)
-        tasks_rv.smoothScrollToPosition(0)
-        // isto faz mais sentido ficar dentro do adapter
-//        taskAdapter.notifyDataSetChanged()
+    fun adapterDataChanged(tasks: List<Task>?) {
+        if (tasks != null) {
+            toDoAdapter.setAdapterItems(tasks)
+            tasks_rv.smoothScrollToPosition(0)
+        } else {
+            toDoAdapter.setAdapterItems(tasks)
+        }
     }
 
     override fun onClick(view: View) {

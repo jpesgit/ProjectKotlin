@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.joaopedrosilva.projectkotlin.main.SecondActivity">
+    tools:context="com.example.joaopedrosilva.projectkotlin.main.WikiSearch.WikiAct">
 
     <Button
         android:id="@+id/buttonAddFrag"
@@ -18,10 +18,6 @@
         android:layout_height="wrap_content"
         android:text="@string/listFrag" />
 
-    <!--<FrameLayout-->
-        <!--android:id="@+id/contentFragment"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"></FrameLayout>-->
     <FrameLayout
         android:id="@+id/contentFragment"
         android:layout_width="match_parent"

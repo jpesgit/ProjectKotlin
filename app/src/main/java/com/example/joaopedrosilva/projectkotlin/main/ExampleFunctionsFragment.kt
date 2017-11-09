@@ -12,12 +12,12 @@ import com.example.joaopedrosilva.projectkotlin.utils.inline
 import kotlinx.android.synthetic.main.fragment_plus_one.*
 
 
-class ExampleFragment : Fragment() {
-    var TAG = ExampleFragment::class.java.canonicalName
+class ExampleFunctionsFragment : Fragment() {
+    var TAG = ExampleFunctionsFragment::class.java.canonicalName
 
     companion object {
-        fun newInstance(): ExampleFragment {
-            return ExampleFragment()
+        fun newInstance(): ExampleFunctionsFragment {
+            return ExampleFunctionsFragment()
         }
     }
 
